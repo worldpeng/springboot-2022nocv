@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="/echars/echarts.min.js"></script>
+    <script src="/echars/china.js"></script>
+    <script src="/echars/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 1100px;height:600px;">
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    //定义数组，存放查到的数据
+    var dataList=[];
+    window.dataList = [];
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        // xAxis: [
+        //     {
+        //         type: 'category',
+        //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        //         axisTick: {
+        //             alignWithLabel: true
+        //         }
+        //     }
+        // ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ]
+        // series: [
+        //     {
+        //         name: 'Direct',
+        //         type: 'bar',
+        //         barWidth: '60%',
+        //         data: [10, 52, 200, 334, 390, 330, 220]
+        //     }
+        // ]
+    };
+
+    $.ajax({
+        //查询地址
+        url:"queryBar",
+        dataType:"json",
+        //查询成功后，有个function 带着数据集合，
+        success:function (data) {
+            // data: map<cityList[],dataList[]>
+            //添加渲染数据 series
+            myChart.setOption({
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: data.cityList,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Direct',
+                        type: 'bar',
+                        barWidth: '60%',
+                        data: data.dataList
+                    }
+                ]
+            })
+
+        }
+
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

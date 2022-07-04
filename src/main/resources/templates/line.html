@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="/echars/echarts.min.js"></script>
+    <script src="/echars/china.js"></script>
+    <script src="/echars/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 900px;height:500px;">
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    //定义数组，存放查到的数据
+    var dataList=[];
+    window.dataList = [];
+    option = {
+        title: {
+            text: 'Stacked Line'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['确诊人数', '隔离人数', '治愈人数', '死亡人数', '疑似人数']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+
+    };
+
+    $.ajax({
+        //查询地址
+        url:"queryLine",
+        //数据类型
+        dataType:"json",
+        //查询成功后，有个function 带着数据集合，
+        success:function (data) {
+            // 某种意义上来说，数组也是object
+            for (let i in data){
+                dataList[i] =data[i];
+            }
+            //添加渲染数据 series
+            myChart.setOption({
+                series: [
+                    {
+                        name: '确诊人数',
+                        type: 'line',
+                        stack: 'Total',
+                        data: data.confirmList
+                    },
+                    {
+                        name: '隔离人数',
+                        type: 'line',
+                        stack: 'Total',
+                        data: data.isolationList
+                    },
+                    {
+                        name: '治愈人数',
+                        type: 'line',
+                        stack: 'Total',
+                        data: data.cureList
+                    },
+                    {
+                        name: '死亡人数',
+                        type: 'line',
+                        stack: 'Total',
+                        data: data.deadList
+                    },
+                    {
+                        name: '疑似人数',
+                        type: 'line',
+                        stack: 'Total',
+                        data: data.similarList
+                    }
+                ]
+            })
+
+        }
+
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

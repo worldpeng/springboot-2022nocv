@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="/echars/echarts.min.js"></script>
+    <script src="/echars/china.js"></script>
+    <script src="/echars/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 900px;height:700px;">
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    //定义数组，存放查到的数据
+    var dataList=[];
+    window.dataList = [];
+    option = {
+        title: {
+            text: 'Referer of a Website',
+            subtext: 'Fake Data',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left'
+        }
+    };
+
+    $.ajax({
+        //查询地址
+        url:"queryPie",
+        //数据类型
+        dataType:"json",
+        //查询成功后，有个function 带着数据集合，
+        success:function (data) {
+            // 某种意义上来说，数组也是object
+            for (let i in data){
+                dataList[i] =data[i];
+            }
+            //添加渲染数据 series
+            myChart.setOption({
+                series: [
+                    {
+                        name: '中国疫情数据',
+                        type: 'pie',
+                        radius: '50%',
+                        data: dataList,
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            })
+
+        }
+
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>
