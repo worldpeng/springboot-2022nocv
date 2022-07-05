@@ -1,7 +1,7 @@
 package com.wang.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wang.dao.IndexMapper;
+import com.wang.mapper.IndexMapper;
 import com.wang.entity.LineTrend;
 import com.wang.entity.NocvData;
 import com.wang.service.IndexService;
