@@ -25,6 +25,7 @@ public class GlobalController {
     @ResponseBody
     //返回成一个json 格式
     public List<NocvGlobalData> queryData(){
+        //mybatis默认查询全部数据
         List<NocvGlobalData> list = globalService.list();
         return list;
     }
