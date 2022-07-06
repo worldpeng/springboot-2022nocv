@@ -46,5 +46,45 @@ public class ChinaDataAdminController {
         return dataView;
     }
 
+    /**
+     * 删除数据 根据id
+     * @param id
+     * @return
+     */
+    @RequestMapping("/china/deleteById")
+    @ResponseBody
+    public DataView deleteById(Integer id){
+        //Sql 的语句
+        indexService.removeById(id);
+        //赋值返回
+        DataView dataView=new DataView();
+        dataView.setCode(200);
+        dataView.setMsg("删除中国地图数据成功!");
+        return dataView;
+    }
 
+    /**
+     * 新增或者修改【ID】
+     * id: nocvData 有id值就是修改，没有值就是新增
+     * updata nocv_data set name="" where id =?
+     * insert into
+     * @param nocvData
+     * @return
+     */
+    @RequestMapping("/china/addOrUpdateChina")
+    @ResponseBody
+    public DataView addChina(NocvData nocvData){
+        //Sql 的语句
+        boolean save = indexService.saveOrUpdate(nocvData);
+        DataView dataView=new DataView();
+        if(save){
+            //赋值返回
+            dataView.setCode(200);
+            dataView.setMsg("新增中国地图数据成功!");
+            return dataView;
+        }
+        dataView.setCode(100);
+        dataView.setMsg("新增中国地图数据失败!");
+        return dataView;
+    }
 }
