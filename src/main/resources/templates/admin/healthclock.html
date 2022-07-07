@@ -250,7 +250,7 @@
                 layer.confirm('真的删除行么', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构
                     //向服务端发送删除指令
-                    $.post("/china/deleteById",{id: obj.data.id},function (res) {
+                    $.post("/deleteHealthClockById",{id: obj.data.id},function (res) {
                         if (res.code == 200){
                             tableIns.reload({
                                 where:"",
@@ -277,7 +277,7 @@
 
         // 新增或者数据请求
         form.on("submit(doAdd)",function (data) {
-            $.post("/",data.field,function (res) {
+            $.post("/addHealthClock",data.field,function (res) {
                 if (res.code == 200){
                     tableIns.reload();
                 }

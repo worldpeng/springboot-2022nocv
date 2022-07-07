@@ -45,4 +45,37 @@ public class HealthClockController {
         healthClockService.page(page,queryWrapper);
         return  new DataView(page.getTotal(),page.getRecords());
     }
+
+    /**
+     * addHealthClock 添加健康打卡数据
+     */
+    @RequestMapping("/addHealthClock")
+    @ResponseBody
+    public DataView addHealthClock(HealthClock healthClock){
+        boolean b=healthClockService.saveOrUpdate(healthClock);
+        DataView dataView=new DataView();
+        if(b){
+            dataView.setCode(200);
+            dataView.setMsg("添加成功！");
+        }
+        dataView.setCode(100);
+        dataView.setMsg("添加失败！");
+        return dataView;
+    }
+
+    /**
+     * 删除操作
+     * deleteHealthClockById
+     */
+    @ResponseBody
+    @RequestMapping("/deleteHealthClockById")
+    public DataView deleteHealthClockById(Integer id){
+        healthClockService.removeById(id);
+        //赋值返回
+        DataView dataView=new DataView();
+        dataView.setCode(200);
+        dataView.setMsg("删除数据成功!");
+        return dataView;
+
+    }
 }
