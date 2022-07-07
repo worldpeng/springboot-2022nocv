@@ -201,12 +201,12 @@
                 ,{field: 'feverAndCough', title: '发烧咳嗽', width:100}
                 ,{field: 'recentHome', title: '近期居住地', width:100}
                 ,{field: 'riskZone', title: '风险地区', width:100,templet:function (d) {
-                        return d.value='高风险'?'<span class="layui-badge layui-bg-red">高风险</span>':'<span class="layui-badge layui-bg-green">低风险</span>';
+                        return d.riskZone='高风险'?'<span class="layui-badge layui-bg-red">高风险</span>':'<span class="layui-badge layui-bg-green">低风险</span>';
                 }}
                 ,{field: 'recentZone', title: '近期接触地', width:100}
                 ,{field: 'healthStatus', title: '健康状况', width:100,fixed: 'right',templet:
                     function (data) {
-                        if (data.value = '健康'){
+                        if (data.healthStatus = '健康'){
                             return '<span class=\"layui-badge layui-bg-blue\">健康</span>'
                         }else{
                             return '<span class=\"layui-badge layui-bg-orange\">不健康</span>'
